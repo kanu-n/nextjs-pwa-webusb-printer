@@ -341,12 +341,13 @@ function sendToPrinter(ip, port, data) {
 }
 
 // Start server
-server.listen(PORT, () => {
-  console.log(`🚀 Network Printer Proxy Server running on http://localhost:${PORT}`);
-  console.log('📡 WebSocket endpoint: ws://localhost:8080/printer-proxy');
-  console.log('🔍 Discovery endpoint: http://localhost:8080/discover');
-  console.log('🖨️  Direct print endpoint: http://localhost:8080/print');
-  console.log('🧪 Test endpoint: http://localhost:8080/test');
+server.listen(PORT, '0.0.0.0', () => {
+  console.log(`🚀 Network Printer Proxy Server running on http://0.0.0.0:${PORT}`);
+  console.log(`📡 WebSocket endpoint: ws://0.0.0.0:${PORT}/printer-proxy`);
+  console.log(`🔍 Discovery endpoint: http://0.0.0.0:${PORT}/discover`);
+  console.log(`🖨️  Direct print endpoint: http://0.0.0.0:${PORT}/print`);
+  console.log(`🧪 Test endpoint: http://0.0.0.0:${PORT}/test`);
+  console.log(`🌐 Network access: http://192.168.0.105:${PORT}`);
 });
 
 // Graceful shutdown
