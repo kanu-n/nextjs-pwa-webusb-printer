@@ -1,11 +1,15 @@
 import { useState, useEffect } from 'react'
 import PrinterController from '../components/PrinterController'
+import MultiPrinterController from '../components/MultiPrinterController'
+import TemplateManager from '../components/TemplateManager'
 
 export default function Home() {
   const [isClient, setIsClient] = useState(false)
   const [isPWAInstalled, setIsPWAInstalled] = useState(false)
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null)
   const [showInstallPrompt, setShowInstallPrompt] = useState(false)
+  const [useMultiPrinter, setUseMultiPrinter] = useState(true)
+  const [currentView, setCurrentView] = useState<'classic' | 'multi' | 'templates'>('multi')
 
   useEffect(() => {
     setIsClient(true)
@@ -103,16 +107,81 @@ export default function Home() {
         )}
 
         {/* Main Content */}
-        {isClient && <PrinterController />}
+        {isClient && (
+          <div>
+            {/* Interface Toggle */}
+            <div className="mb-6 flex justify-center">
+              <div className="bg-white rounded-lg shadow p-1 flex">
+                <button
+                  onClick={() => setCurrentView('classic')}
+                  className={`px-4 py-2 rounded-md transition ${
+                    currentView === 'classic'
+                      ? 'bg-blue-600 text-white shadow'
+                      : 'text-gray-600 hover:text-gray-800'
+                  }`}
+                >
+                  Classic Interface
+                </button>
+                <button
+                  onClick={() => setCurrentView('multi')}
+                  className={`px-4 py-2 rounded-md transition ${
+                    currentView === 'multi'
+                      ? 'bg-blue-600 text-white shadow'
+                      : 'text-gray-600 hover:text-gray-800'
+                  }`}
+                >
+                  Multi-Printer
+                </button>
+                <button
+                  onClick={() => setCurrentView('templates')}
+                  className={`px-4 py-2 rounded-md transition ${
+                    currentView === 'templates'
+                      ? 'bg-blue-600 text-white shadow'
+                      : 'text-gray-600 hover:text-gray-800'
+                  }`}
+                >
+                  Templates
+                </button>
+              </div>
+            </div>
+
+            {/* Printer Controller */}
+            {currentView === 'classic' && <PrinterController />}
+            {currentView === 'multi' && <MultiPrinterController />}
+            {currentView === 'templates' && <TemplateManager />}
+          </div>
+        )}
 
         {/* Features */}
-        <div className="mt-12 grid md:grid-cols-3 gap-6">
+        <div className="mt-12 grid md:grid-cols-4 gap-6">
           <div className="bg-white rounded-lg shadow p-6">
-            <h3 className="font-semibold text-lg mb-2">🔌 WebUSB Support</h3>
+            <h3 className="font-semibold text-lg mb-2">🔌 USB Support</h3>
             <p className="text-gray-600">
-              Direct connection to USB thermal printers without drivers
+              Direct WebUSB connection without drivers
             </p>
           </div>
+          <div className="bg-white rounded-lg shadow p-6">
+            <h3 className="font-semibold text-lg mb-2">🌐 Network Printing</h3>
+            <p className="text-gray-600">
+              Connect to IP-enabled thermal printers
+            </p>
+          </div>
+          <div className="bg-white rounded-lg shadow p-6">
+            <h3 className="font-semibold text-lg mb-2">📶 Bluetooth</h3>
+            <p className="text-gray-600">
+              Wireless printing via Web Bluetooth API
+            </p>
+          </div>
+          <div className="bg-white rounded-lg shadow p-6">
+            <h3 className="font-semibold text-lg mb-2">🔗 API Integration</h3>
+            <p className="text-gray-600">
+              Remote printing via REST API endpoints
+            </p>
+          </div>
+        </div>
+
+        {/* Additional Features */}
+        <div className="mt-8 grid md:grid-cols-3 gap-6">
           <div className="bg-white rounded-lg shadow p-6">
             <h3 className="font-semibold text-lg mb-2">📱 PWA Ready</h3>
             <p className="text-gray-600">
@@ -120,9 +189,15 @@ export default function Home() {
             </p>
           </div>
           <div className="bg-white rounded-lg shadow p-6">
-            <h3 className="font-semibold text-lg mb-2">🖨️ ESC/POS Commands</h3>
+            <h3 className="font-semibold text-lg mb-2">🖨️ Multi-Printer</h3>
             <p className="text-gray-600">
-              Full support for ESC/POS thermal printer commands
+              Manage multiple printers simultaneously
+            </p>
+          </div>
+          <div className="bg-white rounded-lg shadow p-6">
+            <h3 className="font-semibold text-lg mb-2">⚡ ESC/POS Commands</h3>
+            <p className="text-gray-600">
+              Full support for thermal printer commands
             </p>
           </div>
         </div>
