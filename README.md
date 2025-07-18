@@ -345,4 +345,4 @@ const commands = new ESCPOSCommands()
 
 ## License
 
-MIT License - feel free to use this project as a starting point for your own WebUSB applications!
+MIT License - feel free to use this project as a starting point for your own WebUSB applications !
