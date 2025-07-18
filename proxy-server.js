@@ -15,7 +15,7 @@ const net = require('net');
 const http = require('http');
 const url = require('url');
 
-const PORT = 8080;
+const PORT = process.env.PORT || 8081;
 
 // Create HTTP server
 const server = http.createServer();
